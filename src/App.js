@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+
 function App() {
   const [tareas, setTareas] = useState([]);
   const [nuevaTarea, setNuevaTarea] = useState("");
 
-  // 🔹 Cargar las tareas desde localStorage al iniciar
+
   useEffect(() => {
     const tareasGuardadas = localStorage.getItem("tareas");
     if (tareasGuardadas) {
@@ -13,26 +16,55 @@ function App() {
     }
   }, []);
 
-  // 🔹 Guardar las tareas en localStorage cada vez que cambien
   useEffect(() => {
     localStorage.setItem("tareas", JSON.stringify(tareas));
   }, [tareas]);
 
-  // 🔹 Agregar tarea
+  const mostrarNotificacion = (titulo, mensaje) => {
+    if ("Notification" in window) {
+      if (Notification.permission === "granted") {
+        new Notification(titulo, {
+          body: mensaje,
+          icon: "/icons/icon-192x192.png",
+        });
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permiso) => {
+          if (permiso === "granted") {
+            new Notification("Notificaciones activadas 🔔", {
+              body: "Ahora recibirás avisos al agregar o eliminar tareas.",
+              icon: "/icons/icon-192x192.png",
+            });
+          }
+        });
+      }
+    }
+  };
+
   const agregarTarea = () => {
     if (nuevaTarea.trim() === "") return;
+
     const nueva = { texto: nuevaTarea, completada: false };
-    setTareas([...tareas, nueva]);
+    const nuevasTareas = [...tareas, nueva];
+    setTareas(nuevasTareas);
     setNuevaTarea("");
+
+    mostrarNotificacion(
+      "Nueva tarea agregada",
+      `"${nueva.texto}" se agregó a tu lista.`
+    );
   };
 
-  // 🔹 Eliminar tarea
   const eliminarTarea = (index) => {
+    const tareaEliminada = tareas[index];
     const nuevas = tareas.filter((_, i) => i !== index);
     setTareas(nuevas);
+
+    mostrarNotificacion(
+      "Tarea eliminada",
+      `"${tareaEliminada.texto}" se eliminó de tu lista.`
+    );
   };
 
-  // 🔹 Marcar o desmarcar tarea
   const toggleCompletada = (index) => {
     const nuevas = [...tareas];
     nuevas[index].completada = !nuevas[index].completada;
@@ -41,7 +73,7 @@ function App() {
 
   return (
     <div className="contenedor">
-      <h1>Lista de Tareas 📝</h1>
+      <h1>Lista de Tareas</h1>
 
       <div className="formulario">
         <input
@@ -50,7 +82,9 @@ function App() {
           onChange={(e) => setNuevaTarea(e.target.value)}
           placeholder="Escribe una tarea..."
         />
-        <button onClick={agregarTarea}>Agregar</button>
+        <button onClick={agregarTarea}>
+          <FontAwesomeIcon icon={faPlus} /> Agregar
+        </button>
       </div>
 
       <ul className="lista">
@@ -59,8 +93,13 @@ function App() {
             key={index}
             className={tarea.completada ? "tarea completada" : "tarea"}
           >
-            <span onClick={() => toggleCompletada(index)}>{tarea.texto}</span>
-            <button onClick={() => eliminarTarea(index)}>❌</button>
+            <span onClick={() => toggleCompletada(index)}>
+              {tarea.texto}{" "}
+              {tarea.completada && <FontAwesomeIcon icon={faCheck} />}
+            </span>
+            <button onClick={() => eliminarTarea(index)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </li>
         ))}
       </ul>

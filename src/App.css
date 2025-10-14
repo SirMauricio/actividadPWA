@@ -1,97 +1,142 @@
 /* Estilos generales */
 body {
-  background-color: #f3f3f3;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
 }
 
-/* Contenedor principal */
 .contenedor {
-  width: 400px;
-  margin: 50px auto;
+  max-width: 500px;
+  margin: 40px auto;
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Título */
-.contenedor h1 {
-  color: #2c3e50;
+h1 {
+  text-align: center;
+  color: #333333;
+  margin-bottom: 25px;
 }
 
 /* Formulario */
 .formulario {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
 .formulario input {
   flex: 1;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border: 2px solid #4CAF50;
+  border-radius: 8px;
   font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.formulario input:focus {
+  border-color: #388E3C;
 }
 
 .formulario button {
-  background-color: #4caf50;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  padding: 0 20px;
+  margin-left: 10px;
+  font-size: 16px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
 }
 
 .formulario button:hover {
-  background-color: #45a049;
+  background-color: #388E3C;
 }
 
-/* Lista */
+.formulario button svg {
+  margin-right: 8px;
+}
+
+/* Lista de tareas */
 .lista {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-/* Tareas */
 .tarea {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: background 0.3s ease;
+  background-color: #E8F5E9;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
 }
 
-.tarea:hover {
-  background-color: #f0f0f0;
-}
-
-/* Tarea completada */
-.tarea.completada span {
+.tarea.completada {
+  background-color: #C8E6C9;
   text-decoration: line-through;
-  color: #999;
+  color: #555555;
 }
 
-/* Botón eliminar */
+.tarea span {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.tarea span svg {
+  margin-left: 10px;
+  color: #4CAF50;
+}
+
 .tarea button {
-  background-color: #e74c3c;
+  background-color: #FF5252;
   border: none;
   color: white;
-  border-radius: 5px;
-  padding: 5px 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tarea button:hover {
-  background-color: #c0392b;
+  background-color: #D32F2F;
+}
+
+.tarea button svg {
+  font-size: 16px;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .contenedor {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .formulario input {
+    font-size: 14px;
+  }
+
+  .formulario button {
+    font-size: 14px;
+    padding: 0 15px;
+  }
+
+  .tarea span {
+    font-size: 14px;
+  }
 }
