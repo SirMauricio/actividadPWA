@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./Splash.css";
-import logo from "./icons/icon-192x192.png"; 
+import logo from "./icons/icon-192x192.png"; // Ajusta la ruta a tu ícono
 
 function Splash({ onFinish }) {
-    const [visible, setVisible] = useState(true);
+const [visible, setVisible] = useState(true);
 
     useEffect(() => {
     const timer = setTimeout(() => {
         setVisible(false);
-        onFinish();
-    }, 2000); 
-
+      if (onFinish) onFinish(); // Llamamos onFinish solo si existe
+    }, 2000); // 2 segundos
     return () => clearTimeout(timer);
-    }, [onFinish]);
+}, [onFinish]);
 
-    if (!visible) return null;
+if (!visible) return null;
 
-    return (
+return (
     <div className="splash-screen">
-        <img src={logo} alt="Logo" className="splash-logo" />
-        <h1>Mi To-Do PWA</h1>
+    <img src={logo} alt="Logo" className="splash-logo" />
+    <h1>TlabajApp</h1>
     </div>
 );
 }
