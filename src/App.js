@@ -3,11 +3,12 @@ import "./App.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Splash from "./Splash";
 
 function App() {
   const [tareas, setTareas] = useState([]);
   const [nuevaTarea, setNuevaTarea] = useState("");
-
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const tareasGuardadas = localStorage.getItem("tareas");
@@ -70,6 +71,10 @@ function App() {
     nuevas[index].completada = !nuevas[index].completada;
     setTareas(nuevas);
   };
+
+    if (cargando) {
+    return <Splash onFinish={() => setCargando(false)} />;
+  }
 
   return (
     <div className="contenedor">
