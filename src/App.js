@@ -27,6 +27,7 @@ function App() {
 
     if (Notification.permission === "granted") {
       new Notification(titulo, { body: mensaje, icon: "/icons/icon-192x192.png" });
+
     } else if (Notification.permission !== "denied") {
       Notification.requestPermission().then((permiso) => {
         if (permiso === "granted") {
